@@ -1,122 +1,118 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 class Program
 {
-    static void Main()
+    static void BubbleSort(int[] arr)
     {
-        City city = new City("Москва", "Россия", 12615882, "495", new List<string> { "ЦАО", "САО", "ЮАО" });
-        city.DisplayInfo();
-        
-        Employee employee = new Employee("Иван Иванов", new DateTime(1985, 6, 15), "+79001234567", "ivanov@example.com", "Менеджер", "Управление проектами");
-        employee.DisplayInfo();
-        
-        Airplane airplane = new Airplane("Boeing 747", "Boeing", 1998, "Пассажирский");
-        airplane.DisplayInfo();
-        
-        Matrix matrix = new Matrix(new int[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
-        matrix.DisplayInfo();
-        Console.WriteLine("Максимум: " + matrix.GetMax());
-        Console.WriteLine("Минимум: " + matrix.GetMin());
+        int n = arr.Length;
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - i - 1; j++)
+                if (arr[j] > arr[j + 1])
+                    (arr[j], arr[j + 1]) = (arr[j + 1], arr[j]);
     }
-}
 
-class City
-{
-    private string Name;
-    private string Country;
-    private int Population;
-    private string PhoneCode;
-    private List<string> Districts;
-    
-    public City(string name, string country, int population, string phoneCode, List<string> districts)
+    static void QuickSort(int[] arr, int left, int right)
     {
-        Name = name;
-        Country = country;
-        Population = population;
-        PhoneCode = phoneCode;
-        Districts = districts;
-    }
-    
-    public void DisplayInfo()
-    {
-        Console.WriteLine($"Город: {Name}, Страна: {Country}, Население: {Population}, Код: {PhoneCode}, Районы: {string.Join(", ", Districts)}");
-    }
-}
-
-class Employee
-{
-    private string FullName;
-    private DateTime BirthDate;
-    private string Phone;
-    private string Email;
-    private string Position;
-    private string Duties;
-    
-    public Employee(string fullName, DateTime birthDate, string phone, string email, string position, string duties)
-    {
-        FullName = fullName;
-        BirthDate = birthDate;
-        Phone = phone;
-        Email = email;
-        Position = position;
-        Duties = duties;
-    }
-    
-    public void DisplayInfo()
-    {
-        Console.WriteLine($"Сотрудник: {FullName}, Дата рождения: {BirthDate.ToShortDateString()}, Телефон: {Phone}, Email: {Email}, Должность: {Position}, Обязанности: {Duties}");
-    }
-}
-
-class Airplane
-{
-    private string Name;
-    private string Manufacturer;
-    private int Year;
-    private string Type;
-    
-    public Airplane(string name, string manufacturer, int year, string type)
-    {
-        Name = name;
-        Manufacturer = manufacturer;
-        Year = year;
-        Type = type;
-    }
-    
-    public void DisplayInfo()
-    {
-        Console.WriteLine($"Самолёт: {Name}, Производитель: {Manufacturer}, Год выпуска: {Year}, Тип: {Type}");
-    }
-}
-
-class Matrix
-{
-    private int[,] Data;
-    
-    public Matrix(int[,] data)
-    {
-        Data = data;
-    }
-    
-    public void DisplayInfo()
-    {
-        for (int i = 0; i < Data.GetLength(0); i++)
+        if (left < right)
         {
-            for (int j = 0; j < Data.GetLength(1); j++)
-                Console.Write(Data[i, j] + " ");
-            Console.WriteLine();
+            int pivot = arr[right], i = left - 1;
+            for (int j = left; j < right; j++)
+                if (arr[j] < pivot)
+                    (arr[++i], arr[j]) = (arr[j], arr[i]);
+            (arr[i + 1], arr[right]) = (arr[right], arr[i + 1]);
+            QuickSort(arr, left, i);
+            QuickSort(arr, i + 2, right);
         }
     }
-    
-    public int GetMax()
+
+    static int StringLength(string str)
     {
-        return Data.Cast<int>().Max();
+        int length = 0;
+        foreach (char c in str) length++;
+        return length;
     }
-    
-    public int GetMin()
+
+    static string ReverseString(string str)
     {
-        return Data.Cast<int>().Min();
+        return new string(str.Reverse().ToArray());
+    }
+
+    static int WordCount(string str)
+    {
+        return str.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+    }
+
+    static bool CompareStrings(string str1, string str2)
+    {
+        if (StringLength(str1) != StringLength(str2)) return false;
+        for (int i = 0; i < str1.Length; i++)
+            if (str1[i] != str2[i]) return false;
+        return true;
+    }
+
+    static (int alphabets, int digits, int specials) CountCharacters(string str)
+    {
+        int alphabets = 0, digits = 0, specials = 0;
+        foreach (char c in str)
+        {
+            if (char.IsLetter(c)) alphabets++;
+            else if (char.IsDigit(c)) digits++;
+            else specials++;
+        }
+        return (alphabets, digits, specials);
+    }
+
+    static string CopyString(string str)
+    {
+        char[] copy = new char[str.Length];
+        for (int i = 0; i < str.Length; i++)
+            copy[i] = str[i];
+        return new string(copy);
+    }
+
+    static (int vowels, int consonants) CountVowelsConsonants(string str)
+    {
+        int vowels = 0, consonants = 0;
+        foreach (char c in str.ToLower())
+        {
+            if ("aeiou".Contains(c)) vowels++;
+            else if (char.IsLetter(c)) consonants++;
+        }
+        return (vowels, consonants);
+    }
+
+    static void SortStrings(string[] arr)
+    {
+        Array.Sort(arr, StringComparer.Ordinal);
+    }
+
+    static void Main()
+    {
+        int[] arr = { 64, 34, 25, 12, 22, 11, 90 };
+        BubbleSort(arr);
+        Console.WriteLine("Bubble Sort: " + string.Join(", ", arr));
+
+        int[] arr2 = { 64, 34, 25, 12, 22, 11, 90 };
+        QuickSort(arr2, 0, arr2.Length - 1);
+        Console.WriteLine("Quick Sort: " + string.Join(", ", arr2));
+
+        string str = "Hello, World!";
+        Console.WriteLine("String Length: " + StringLength(str));
+        Console.WriteLine("Reversed: " + ReverseString(str));
+        Console.WriteLine("Word Count: " + WordCount(str));
+        Console.WriteLine("Compare Strings: " + CompareStrings("test", "test"));
+
+        var counts = CountCharacters(str);
+        Console.WriteLine($"Alphabets: {counts.alphabets}, Digits: {counts.digits}, Specials: {counts.specials}");
+
+        Console.WriteLine("Copied String: " + CopyString(str));
+        var vc = CountVowelsConsonants(str);
+        Console.WriteLine($"Vowels: {vc.vowels}, Consonants: {vc.consonants}");
+
+        string[] words = { "banana", "apple", "cherry" };
+        SortStrings(words);
+        Console.WriteLine("Sorted Strings: " + string.Join(", ", words));
     }
 }

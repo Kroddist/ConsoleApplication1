@@ -450,18 +450,15 @@ namespace Publications
         {
             Console.WriteLine("=== Тестирование задания 1.1 и 1.2 ===");
 
-            // 1. Создание и вывод объекта Magazine
             Magazine magazine = new Magazine();
             Console.WriteLine("\n1. Краткая информация о журнале:");
             Console.WriteLine(magazine.ToShortString());
 
-            // 2. Вывод значений индексатора
             Console.WriteLine("\n2. Значения индексатора:");
             Console.WriteLine($"Weekly: {magazine[Frequency.Weekly]}");
             Console.WriteLine($"Monthly: {magazine[Frequency.Monthly]}");
             Console.WriteLine($"Yearly: {magazine[Frequency.Yearly]}");
 
-            // 3. Присвоение значений свойствам
             magazine.EditionTitle = "Научный журнал";
             magazine.Frequency = Frequency.Monthly;
             magazine.PublishDate = new DateTime(2024, 4, 13);
@@ -469,7 +466,6 @@ namespace Publications
             Console.WriteLine("\n3. Полная информация о журнале:");
             Console.WriteLine(magazine.ToString());
 
-            // 4. Добавление статей
             Person author1 = new Person("Иван", "Иванов");
             Person author2 = new Person("Петр", "Петров");
             Article article1 = new Article(author1, "Статья 1", 4.5);
@@ -479,7 +475,6 @@ namespace Publications
             Console.WriteLine("\n4. Информация о журнале после добавления статей:");
             Console.WriteLine(magazine.ToString());
 
-            // 5. Тестирование массивов
             Console.WriteLine("\n5. Сравнение времени выполнения операций с массивами:");
             
             int size = 1000;
@@ -509,7 +504,6 @@ namespace Publications
                 }
             }
 
-            // Тестирование Edition
             Console.WriteLine("\n=== Тестирование Edition ===");
             Edition edition1 = new Edition("Test Edition", DateTime.Now, 100);
             Edition edition2 = new Edition("Test Edition", DateTime.Now, 100);
@@ -519,7 +513,6 @@ namespace Publications
             Console.WriteLine($"HashCode edition1: {edition1.GetHashCode()}");
             Console.WriteLine($"HashCode edition2: {edition2.GetHashCode()}");
 
-            // Тестирование исключения
             Console.WriteLine("\nТестирование исключения при отрицательном тираже:");
             try
             {
@@ -530,7 +523,6 @@ namespace Publications
                 Console.WriteLine($"Поймано исключение: {ex.Message}");
             }
 
-            // Тестирование DeepCopy
             Console.WriteLine("\nТестирование DeepCopy:");
             Magazine magazineCopy = (Magazine)magazine.DeepCopy();
             magazine.EditionTitle = "Измененное название";
@@ -539,7 +531,6 @@ namespace Publications
             Console.WriteLine("Копия:");
             Console.WriteLine(magazineCopy.ToShortString());
 
-            // Тестирование итераторов
             Console.WriteLine("\nСтатьи с рейтингом выше 4.6:");
             foreach (Article article in magazine.GetArticlesByRating(4.6))
             {

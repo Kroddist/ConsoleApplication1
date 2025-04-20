@@ -1,151 +1,217 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-class CountryDictionary
+
+enum AccountType { Current, Savings, Deposit }
+
+class BankAccount
 {
-    private Dictionary<string, string> engToRus;
-    private Dictionary<string, string> rusToEng;
+    private static int accountCounter = 0;
+    private int accountNumber;
+    private decimal balance;
+    private AccountType type;
 
-    public CountryDictionary()
+    public BankAccount(decimal initialBalance, AccountType accountType)
     {
-        engToRus = new Dictionary<string, string>
-        {
-            {"Russia", "Россия"},
-            {"USA", "США"},
-            {"Germany", "Германия"},
-            {"France", "Франция"},
-            {"Italy", "Италия"}
-        };
-
-        rusToEng = new Dictionary<string, string>
-        {
-            {"Россия", "Russia"},
-            {"США", "USA"},
-            {"Германия", "Germany"},
-            {"Франция", "France"},
-            {"Италия", "Italy"}
-        };
+        accountNumber = ++accountCounter;
+        balance = initialBalance;
+        type = accountType;
     }
 
-    public string Translate(string word, bool fromEnglish)
+    public int GetAccountNumber() => accountNumber;
+    public decimal GetBalance() => balance;
+    public AccountType GetAccountType() => type;
+
+    public void Deposit(decimal amount)
     {
-        if (fromEnglish)
+        if (amount > 0)
+            balance += amount;
+    }
+
+    public bool Withdraw(decimal amount)
+    {
+        if (amount > 0 && balance >= amount)
         {
-            return engToRus.TryGetValue(word, out string translation) ? translation : "Перевод не найден";
+            balance -= amount;
+            return true;
         }
-        else
-        {
-            return rusToEng.TryGetValue(word, out string translation) ? translation : "Translation not found";
-        }
-    }
-}
-class Point2D<T>
-{
-    public T X { get; set; }
-    public T Y { get; set; }
-
-    public Point2D(T x, T y)
-    {
-        X = x;
-        Y = y;
-    }
-
-    public override string ToString()
-    {
-        return $"({X}, {Y})";
-    }
-}
-
-class Point3D : Point2D<int>
-{
-    public int Z { get; set; }
-
-    public Point3D(int x, int y, int z) : base(x, y)
-    {
-        Z = z;
-    }
-
-    public override string ToString()
-    {
-        return $"({X}, {Y}, {Z})";
-    }
-}
-class Line<T>
-{
-    public Point2D<T> Point1 { get; set; }
-    public Point2D<T> Point2 { get; set; }
-
-    public Line(Point2D<T> point1, Point2D<T> point2)
-    {
-        Point1 = point1;
-        Point2 = point2;
-    }
-
-    public Line(T x1, T y1, T x2, T y2)
-    {
-        Point1 = new Point2D<T>(x1, y1);
-        Point2 = new Point2D<T>(x2, y2);
-    }
-
-    public override string ToString()
-    {
-        return $"Линия проходит через точки {Point1} и {Point2}";
-    }
-}
-class WordCounter
-{
-    public static Dictionary<string, int> CountWords(string text)
-    {
-        var words = text.ToLower()
-                       .Split(new[] { ' ', '.', ',', '!', '?', ';', ':', '-', '\n', '\r' }, 
-                             StringSplitOptions.RemoveEmptyEntries);
-        
-        var wordCount = new Dictionary<string, int>();
-        
-        foreach (var word in words)
-        {
-            if (wordCount.ContainsKey(word))
-            {
-                wordCount[word]++;
-            }
-            else
-            {
-                wordCount[word] = 1;
-            }
-        }
-        
-        return wordCount;
+        return false;
     }
 }
 
 class Program
 {
-    static void Main(string[] args)
+    static void BubbleSort(int[] arr)
     {
-        Console.WriteLine("Задание 1: Словарь стран");
-        var dictionary = new CountryDictionary();
-        Console.WriteLine(dictionary.Translate("Russia", true));
-        Console.WriteLine(dictionary.Translate("Россия", false));
-        Console.WriteLine();
+        int n = arr.Length;
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - i - 1; j++)
+                if (arr[j] > arr[j + 1])
+                {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+    }
 
-        Console.WriteLine("Задание 2: Точка в 3D пространстве");
-        var point3D = new Point3D(1, 2, 3);
-        Console.WriteLine(point3D);
-        Console.WriteLine();
-
-        Console.WriteLine("Задание 3: Прямая на плоскости");
-        var line1 = new Line<int>(new Point2D<int>(0, 0), new Point2D<int>(1, 1));
-        var line2 = new Line<double>(0.0, 0.0, 1.0, 1.0);
-        Console.WriteLine(line1);
-        Console.WriteLine(line2);
-        Console.WriteLine();
-
-        Console.WriteLine("Задание 4: Подсчет слов в тексте");
-        string text = "Hello world! Hello C#! World is beautiful.";
-        var wordCount = WordCounter.CountWords(text);
-        foreach (var pair in wordCount)
+    static void QuickSort(int[] arr, int left, int right)
+    {
+        if (left < right)
         {
-            Console.WriteLine($"{pair.Key}: {pair.Value}");
+            int pivot = Partition(arr, left, right);
+            QuickSort(arr, left, pivot - 1);
+            QuickSort(arr, pivot + 1, right);
         }
+    }
+
+    static int Partition(int[] arr, int left, int right)
+    {
+        int pivot = arr[right];
+        int i = left - 1;
+        for (int j = left; j < right; j++)
+        {
+            if (arr[j] < pivot)
+            {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp1 = arr[i + 1];
+        arr[i + 1] = arr[right];
+        arr[right] = temp1;
+        return i + 1;
+    }
+
+    static int StringLength(string str)
+    {
+        int length = 0;
+        foreach (char c in str)
+            length++;
+        return length;
+    }
+
+    static void PrintReverse(string str)
+    {
+        for (int i = str.Length - 1; i >= 0; i--)
+            Console.Write(str[i]);
+        Console.WriteLine();
+    }
+
+    static int CountWords(string str)
+    {
+        int count = 0;
+        bool inWord = false;
+        foreach (char c in str)
+        {
+            if (char.IsWhiteSpace(c))
+                inWord = false;
+            else if (!inWord)
+            {
+                inWord = true;
+                count++;
+            }
+        }
+        return count;
+    }
+
+    static bool CompareStrings(string str1, string str2)
+    {
+        if (str1.Length != str2.Length)
+            return false;
+        for (int i = 0; i < str1.Length; i++)
+            if (str1[i] != str2[i])
+                return false;
+        return true;
+    }
+
+    static void CountCharacters(string str)
+    {
+        int alphabets = 0, digits = 0, special = 0;
+        foreach (char c in str)
+        {
+            if (char.IsLetter(c))
+                alphabets++;
+            else if (char.IsDigit(c))
+                digits++;
+            else
+                special++;
+        }
+        Console.WriteLine($"Alphabets: {alphabets}, Digits: {digits}, Special: {special}");
+    }
+
+    static string CopyString(string source)
+    {
+        char[] destination = new char[source.Length];
+        for (int i = 0; i < source.Length; i++)
+            destination[i] = source[i];
+        return new string(destination);
+    }
+
+    static void CountVowelsConsonants(string str)
+    {
+        int vowels = 0, consonants = 0;
+        string vowelsStr = "aeiouAEIOU";
+        foreach (char c in str)
+        {
+            if (char.IsLetter(c))
+            {
+                if (vowelsStr.Contains(c))
+                    vowels++;
+                else
+                    consonants++;
+            }
+        }
+        Console.WriteLine($"Vowels: {vowels}, Consonants: {consonants}");
+    }
+
+    static void SortStringArray(string[] arr)
+    {
+        for (int i = 0; i < arr.Length - 1; i++)
+            for (int j = 0; j < arr.Length - i - 1; j++)
+                if (string.Compare(arr[j], arr[j + 1]) > 0)
+                {
+                    string temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+    }
+
+    static void Main()
+    {
+        BankAccount account = new BankAccount(1000, AccountType.Current);
+        Console.WriteLine($"Account Number: {account.GetAccountNumber()}");
+        Console.WriteLine($"Balance: {account.GetBalance()}");
+        Console.WriteLine($"Account Type: {account.GetAccountType()}");
+
+        int[] arr = { 64, 34, 25, 12, 22, 11, 90 };
+        BubbleSort(arr);
+        Console.WriteLine("Bubble Sort:");
+        foreach (int num in arr)
+            Console.Write(num + " ");
+        Console.WriteLine();
+
+        int[] arr2 = { 64, 34, 25, 12, 22, 11, 90 };
+        QuickSort(arr2, 0, arr2.Length - 1);
+        Console.WriteLine("Quick Sort:");
+        foreach (int num in arr2)
+            Console.Write(num + " ");
+        Console.WriteLine();
+
+        string testString = "Hello World!";
+        Console.WriteLine($"String Length: {StringLength(testString)}");
+        Console.Write("Reverse String: ");
+        PrintReverse(testString);
+        Console.WriteLine($"Word Count: {CountWords(testString)}");
+        Console.WriteLine($"String Comparison: {CompareStrings("Hello", "Hello")}");
+        CountCharacters(testString);
+        Console.WriteLine($"Copied String: {CopyString(testString)}");
+        CountVowelsConsonants(testString);
+
+        string[] stringArray = { "banana", "apple", "orange", "grape" };
+        SortStringArray(stringArray);
+        Console.WriteLine("Sorted String Array:");
+        foreach (string str in stringArray)
+            Console.Write(str + " ");
+        Console.WriteLine();
     }
 }

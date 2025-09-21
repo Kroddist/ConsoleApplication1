@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="storegg.ProductDetailPage"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="16">
+
+            <Grid ColumnDefinitions="50,*,50" HeightRequest="50" Margin="0,5,0,15">
+                <Frame Grid.Column="0" 
+                       BackgroundColor="#F5F5F5"
+                       CornerRadius="12"
+                       HeightRequest="44"
+                       WidthRequest="44"
+                       HasShadow="False"
+                       Padding="0">
+                    <Label Text="‹" 
+                           FontSize="24"
+                           TextColor="Black"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackClicked"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+                
+                <Label Grid.Column="1"
+                       Text="ZelOX"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                
+                <Frame Grid.Column="2"
+                       BackgroundColor="#F5F5F5"
+                       CornerRadius="12"
+                       HeightRequest="44"
+                       WidthRequest="44"
+                       HasShadow="False"
+                       Padding="0">
+                    <Label Text="🛍️" 
+                           FontSize="18"
+                           TextColor="Black"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Frame>
+            </Grid>
+
+            <Frame BackgroundColor="#F0F0F0"
+                   CornerRadius="20"
+                   HasShadow="False"
+                   Padding="0"
+                   HeightRequest="380"
+                   Margin="0,0,0,15">
+                <Grid>
+                    <Image Source="avoine_jacket_front.png"
+                           Aspect="AspectFill"
+                           HeightRequest="380"
+                           BackgroundColor="Transparent"/>
+                    
+                    <StackLayout VerticalOptions="Start"
+                                 HorizontalOptions="End"
+                                 Orientation="Horizontal"
+                                 Margin="0,15,15,0">
+                        <Frame BackgroundColor="White"
+                               CornerRadius="15"
+                               HasShadow="False"
+                               Padding="10,6">
+                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                <Label Text="⭐" FontSize="14"/>
+                                <Label Text="4.7" FontSize="14" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+
+            <Grid ColumnDefinitions="*,12,*,12,*" HeightRequest="80" Margin="0,0,0,15">
+                <Border Grid.Column="0"
+                       BackgroundColor="#F0F0F0"
+                       Stroke="Black"
+                       StrokeThickness="3">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <Image Source="avoine_jacket_main.png" 
+                           Aspect="AspectFill"/>
+                </Border>
+                
+                <Frame Grid.Column="2"
+                       BackgroundColor="#F0F0F0"
+                       CornerRadius="12"
+                       HasShadow="False"
+                       Padding="0">
+                    <Image Source="avoine_jacket_back.png" Aspect="AspectFill"/>
+                </Frame>
+                
+                <Frame Grid.Column="4"
+                       BackgroundColor="#F0F0F0"
+                       CornerRadius="12"
+                       HasShadow="False"
+                       Padding="0">
+                    <Image Source="avoine_jacket_side.png" Aspect="AspectFill"/>
+                </Frame>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                <StackLayout Grid.Column="0">
+                    <Label Text="Avoine Hooded"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+                    <Label Text="Quilted Jacket"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+                </StackLayout>
+                
+                <Label Grid.Column="1"
+                       Text="🔖"
+                       FontSize="24"
+                       TextColor="Gray"
+                       VerticalOptions="Center"/>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,12,*" HeightRequest="100" Margin="0,0,0,20">
+                <Frame Grid.Column="0"
+                       BackgroundColor="#F5F5F5"
+                       CornerRadius="12"
+                       HasShadow="False"
+                       Padding="12">
+                    <StackLayout Spacing="8">
+                        <Label Text="CHOOSE"
+                               FontSize="11"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+                        <Label Text="COLOR"
+                               FontSize="11"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+                        
+                        <Button BackgroundColor="Black"
+                                CornerRadius="18"
+                                HeightRequest="36"
+                                Margin="0,4,0,0"
+                                Text="BEIGE ▼"
+                                TextColor="White"
+                                FontSize="11"
+                                FontAttributes="Bold"/>
+                    </StackLayout>
+                </Frame>
+                
+                <Frame Grid.Column="2"
+                       BackgroundColor="Black"
+                       CornerRadius="12"
+                       HasShadow="False"
+                       Padding="12">
+                    <StackLayout Spacing="8">
+                        <Label Text="CHOOSE"
+                               FontSize="11"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                        <Label Text="SIZE"
+                               FontSize="11"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                        
+                        <Border BackgroundColor="Transparent"
+                                Stroke="White"
+                                StrokeThickness="1"
+                                Margin="0,4,0,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="18"/>
+                            </Border.StrokeShape>
+                            <Label Text="MEDIUM ▼"
+                                   TextColor="White"
+                                   FontSize="11"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HeightRequest="36"/>
+                        </Border>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <Frame BackgroundColor="#E85A4F"
+                   CornerRadius="16"
+                   HasShadow="False"
+                   HeightRequest="55"
+                   Margin="0,10,0,20">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <Label Grid.Column="0"
+                           Text="CHECKOUT →"
+                           TextColor="White"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                    <Label Grid.Column="1"
+                           Text="$ 1500"
+                           TextColor="White"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           Margin="0,0,16,0"/>
+                </Grid>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
